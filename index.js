@@ -84,11 +84,17 @@ app.post("/create-user", async (req, res) => {
 
     connection.query(
       "INSERT INTO users (email, password) VALUES (?, ?)",
-      [email, password], 
-      (err) => {
-        if (err) throw err;
+      [email, password],
+      (err, results) => {
+        if (err) {
+          console.error("Error inserting user into database:", err);
+          res.status(500).send("Error inserting user into database");
+          return;
+        }
+        console.log("User inserted into database:", results);
       }
     );
+
 
     res.json(userResponse.data);
   } catch (error) {
