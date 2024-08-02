@@ -1,6 +1,15 @@
 import express from "express";
 import axios from "axios";
 import connection from "../config.js";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables from .env file
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const router = express.Router();
 
@@ -9,49 +18,86 @@ const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
 // Middleware to parse JSON requests
 router.use(express.json());
 
+// Function to get the database name based on email
+const getDatabaseName = (email) => {
+  if (email === 'bcgrkofficial@gmail.com') {
+    return 'database1';
+  } else if (email === 'chenchabharath@gmail.com') {
+    return 'database2';
+  } else {
+    return null; // or handle as needed
+  }
+};
+
 // Route to create a user
-router.post("/create-user", async (req, res) => {
+router.post('/create-user', async (req, res) => {
   const { email, password } = req.body;
 
   try {
     // Get access token
-    const tokenResponse = await axios.get("http://localhost:3000/get-token");
+    const tokenResponse = await axios.get('http://localhost:3000/get-token');
     const accessToken = tokenResponse.data.access_token;
 
-    // Create user
+    // Create user in Auth0
     const userResponse = await axios.post(
       `https://${AUTH0_DOMAIN}/api/v2/users`,
       {
         email: email,
         password: password,
-        connection: "Username-Password-Authentication",
+        connection: 'Username-Password-Authentication',
       },
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }
     );
 
-    // Inserting to the database after creating a user.
+    // Determine the database based on the user's email
+    const databaseName = getDatabaseName(email);
+    if (!databaseName) {
+      return res.status(403).send('Unauthorized');
+    }
 
-    connection.query(
-      "INSERT INTO users (email, password) VALUES (?, ?)",
-      [email, password],
-      (err, results) => {
-        if (err) {
-          console.error("Error inserting user into database:", err);
-          res.status(500).send("Error inserting user into database");
-          return;
-        }
-        console.log("User inserted into database:", results);
-        res.json(userResponse.data);
+    // Create a new MySQL connection for the determined database
+    const connection = mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: databaseName, // Use the dynamic database name
+    });
+
+    // Connect to the database
+    connection.connect((err) => {
+      if (err) {
+        console.error('Error connecting to the database:', err);
+        res.status(500).send('Error connecting to the database');
+        return;
       }
-    );
+
+      // Insert user into the selected database
+      connection.query(
+        'INSERT INTO users (email, password) VALUES (?, ?)',
+        [email, password],
+        (err, results) => {
+          if (err) {
+            console.error('Error inserting user into database:', err);
+            res.status(500).send('Error inserting user into database');
+            return;
+          }
+          console.log('User inserted into database:', results);
+          res.json(userResponse.data);
+        }
+      );
+
+      // Close the connection after the query
+      connection.end();
+    });
+
   } catch (error) {
-    console.error("Error creating user:", error);
-    res.status(500).send("Error creating user");
+    console.error('Error creating user:', error);
+    res.status(500).send('Error creating user');
   }
 });
 
@@ -96,6 +142,10 @@ router.get("/users", (req, res) => {
 router.get('/users/:id', (req, res) => {
   const { id } = req.params;
 
+  console.log(`Fetching user with ID: ${id}`);
+
+  const connection = getConnection();
+
   connection.query('SELECT * FROM users WHERE id = ?', [id], (err, results) => {
     if (err) {
       console.error('Error fetching user:', err);
@@ -110,7 +160,7 @@ router.get('/users/:id', (req, res) => {
   });
 });
 
-/ Route to update a user by ID (PUT)
+// Route to update a user by ID (PUT)
 router.put('/users/:id', (req, res) => {
   const { id } = req.params;
   const { email, password } = req.body;
