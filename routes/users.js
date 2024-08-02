@@ -92,6 +92,48 @@ router.get("/users", (req, res) => {
   });
 });
 
+// Route to get a user by ID (GET)
+router.get('/users/:id', (req, res) => {
+  const { id } = req.params;
+
+  connection.query('SELECT * FROM users WHERE id = ?', [id], (err, results) => {
+    if (err) {
+      console.error('Error fetching user:', err);
+      res.status(500).send('Error fetching user');
+      return;
+    }
+    if (results.length === 0) {
+      res.status(404).send('User not found');
+      return;
+    }
+    res.json(results[0]);
+  });
+});
+
+/ Route to update a user by ID (PUT)
+router.put('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const { email, password } = req.body;
+
+  connection.query(
+    'UPDATE users SET email = ?, password = ? WHERE id = ?',
+    [email, password, id],
+    (err, results) => {
+      if (err) {
+        console.error('Error updating user:', err);
+        res.status(500).send('Error updating user');
+        return;
+      }
+      if (results.affectedRows === 0) {
+        res.status(404).send('User not found');
+        return;
+      }
+      res.send('User updated successfully');
+    }
+  );
+});
+
+
 // Fetching Data from different DB on basis of user
 router.get("/data", (req, res) => {
   const email = req.user.email;
