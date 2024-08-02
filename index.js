@@ -57,94 +57,11 @@ app.get("/get-token", async (req, res) => {
   }
 });
 
-// Route to create a user
-app.post("/create-user", async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    // Get access token
-    const tokenResponse = await axios.get("http://localhost:3000/get-token");
-    const accessToken = tokenResponse.data.access_token;
-
-    // Create user
-    const userResponse = await axios.post(
-      `https://${AUTH0_DOMAIN}/api/v2/users`,
-      {
-        email: email,
-        password: password,
-        connection: "Username-Password-Authentication",
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    connection.query(
-      "INSERT INTO users (email, password) VALUES (?, ?)",
-      [email, password],
-      (err, results) => {
-        if (err) {
-          console.error("Error inserting user into database:", err);
-          res.status(500).send("Error inserting user into database");
-          return;
-        }
-        console.log("User inserted into database:", results);
-        res.json(userResponse.data);
-      }
-    );
-
-  } catch (error) {
-    console.error("Error creating user:", error);
-    res.status(500).send("Error creating user");
-  }
-});
-
-
-// Route to change user email address
-
-app.post("/update-email", async (req, res) => {
-  const { userId, newEmail } = req.body;
-
-  try {
-    // Get access token
-    const tokenResponse = await axios.get("http://localhost:3000/get-token");
-    const accessToken = tokenResponse.data.access_token;
-
-    // Update user email
-    const response = await axios.post(
-      `https://${AUTH0_DOMAIN}/api/v2/users/${userId}`,
-      {
-        email: newEmail,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).send("Error updating email", error);
-  }
-});
-
 // Create a route for Home Page
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// Importing and using connection to make a get query from our Database
-app.get("/api/v1/users",(req, res) => {
-  connection.query("SELECT * from users", (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
-});
 
 // Fetching Data from different DB on basis of user
 app.get("/api/v1/data",(req, res) => {
