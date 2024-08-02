@@ -25,7 +25,7 @@ const getDatabaseName = (email) => {
   } else if (email === 'chenchabharath@gmail.com') {
     return 'database2';
   } else {
-    return null; // or handle as needed
+    return 'database3'; 
   }
 };
 
