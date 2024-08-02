@@ -82,9 +82,48 @@ app.post("/create-user", async (req, res) => {
       }
     );
 
+    connection.query(
+      "INSERT INTO users (email, password) VALUES (?, ?)",
+      [email, password], 
+      (err) => {
+        if (err) throw err;
+      }
+    );
+
     res.json(userResponse.data);
   } catch (error) {
     res.status(500).send("Error creating user");
+  }
+});
+
+
+// Route to change user email address
+
+app.post("/update-email", async (req, res) => {
+  const { userId, newEmail } = req.body;
+
+  try {
+    // Get access token
+    const tokenResponse = await axios.get("http://localhost:3000/get-token");
+    const accessToken = tokenResponse.data.access_token;
+
+    // Update user email
+    const response = await axios.post(
+      `https://${AUTH0_DOMAIN}/api/v2/users/${userId}`,
+      {
+        email: newEmail,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).send("Error updating email");
   }
 });
 
@@ -109,8 +148,10 @@ app.get("/api/v1/data",(req, res) => {
 
   if (email === "bcgrkofficial@gmail.com") {
     database = "database1";
-  } else {
+  } else if (email === "chenchabharath@gmail.com") {
     database = "database2";
+  } else {
+    return res.status(403).send("Unauthorized");
   }
 
   const query = `USE ??; SELECT * FROM data`;
