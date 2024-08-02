@@ -23,6 +23,12 @@ const jwtCheck = jwt({
   audience: AUDIENCE,
   issuer: `https://${AUTH0_DOMAIN}/`,
   algorithms: ["RS256"],
-}).unless({ path: ["/get-token", "/create-user"] });
+}).unless({
+  path: [
+    "/get-token",
+    "/create-user",
+    { url: /^\/api\/v1\/workers.*/, methods: ["GET", "POST", "PUT", "DELETE"] },
+  ],
+});
 
 export default jwtCheck;
