@@ -6,23 +6,16 @@ import path from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Loading environment variables from .env file
-dotenv.config({ path: path.resolve(__dirname, ".env") });
+// Load environment variables from .env file
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-const connection = {
-  database1: mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: database1,
-  }),
-  database2: mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: database2,
-  }),
-};
+// Create a connection to the default database
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DEFAULT_DATABASE, // Default database
+});
 
 connection.connect((err) => {
     if(err) {
