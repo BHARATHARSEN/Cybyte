@@ -4,6 +4,8 @@ import { expressjwt as jwt } from "express-jwt";
 import jwksRsa from "jwks-rsa";
 import axios from "axios";
 import connection from "./config.js";
+import userRoutes from "./routes/users.js"
+import operationRoutes from "./routes/operations.js"
 
 
 dotenv.config();
@@ -29,8 +31,9 @@ const jwtCheck = jwt({
   audience: AUDIENCE,
   issuer: `https://${AUTH0_DOMAIN}/`,
   algorithms: ["RS256"],
-}).unless({ path: ["/get-token", "/create-user"] });
+}).unless({ path: ["/get-token", "/create-user", "/workers","/workers:id"] });
 
+app.use("/api/v1", operationRoutes);
 app.use(jwtCheck);
 
 // Route to obtain an access token
@@ -88,6 +91,11 @@ app.get("/api/v1/data",(req, res) => {
     res.json(results);
   });
 });
+
+//Importing userRoutes
+
+app.use("/api/v1", userRoutes);
+
 
 //Server is listening to the port
 app.listen(port, () => {
