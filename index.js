@@ -92,12 +92,12 @@ app.post("/create-user", async (req, res) => {
           return;
         }
         console.log("User inserted into database:", results);
+        res.json(userResponse.data);
       }
     );
 
-
-    res.json(userResponse.data);
   } catch (error) {
+    console.error("Error creating user:", error);
     res.status(500).send("Error creating user");
   }
 });
@@ -129,7 +129,7 @@ app.post("/update-email", async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-    res.status(500).send("Error updating email");
+    res.status(500).send("Error updating email", error);
   }
 });
 
