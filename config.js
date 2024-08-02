@@ -9,6 +9,9 @@ const __dirname = path.dirname(__filename);
 // Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+// dotenv.config({ path: "./config.env" });
+
+
 // Create a connection to the default database
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
