@@ -1,5 +1,16 @@
 import { expressjwt as jwt } from "express-jwt";
 import jwksRsa from "jwks-rsa";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
+
+const { AUTH0_DOMAIN, AUDIENCE } = process.env;
+if (!AUTH0_DOMAIN || !AUDIENCE) {
+  throw new Error(
+    "Missing required environment variables: AUTH0_DOMAIN or AUDIENCE"
+  );
+}
 
 // Middleware to validate JWT tokens
 const jwtCheck = jwt({
