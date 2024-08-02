@@ -133,6 +133,24 @@ router.put('/users/:id', (req, res) => {
   );
 });
 
+// Route to delete a user by ID (DELETE)
+router.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+
+  connection.query('DELETE FROM users WHERE id = ?', [id], (err, results) => {
+    if (err) {
+      console.error('Error deleting user:', err);
+      res.status(500).send('Error deleting user');
+      return;
+    }
+    if (results.affectedRows === 0) {
+      res.status(404).send('User not found');
+      return;
+    }
+    res.send('User deleted successfully');
+  });
+});
+
 
 // Fetching Data from different DB on basis of user
 router.get("/data", (req, res) => {
