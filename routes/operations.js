@@ -40,7 +40,7 @@ router.post("/create-worker", async (req, res) => {
 
       // Insert user into the selected database
       connection.query(
-        "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+        "CALL InsertWorker(?, ?, ?)",
         [name, email, password],
         (err, results) => {
           if (err) {
@@ -72,7 +72,7 @@ router.get("/workers", (req, res) => {
       return;
     }
 
-    connection.query("SELECT * FROM users", (err, results) => {
+    connection.query("CALL GetAllWorkers()", (err, results) => {
       if (err) {
         console.error("Error fetching users:", err);
         res.status(500).send("Error fetching users");
@@ -98,7 +98,7 @@ router.get("/workers/:id", (req, res) => {
     }
 
     connection.query(
-      "SELECT * FROM users WHERE id = ?",
+      'CALL GetWorkerById(?)',
       [id],
       (err, results) => {
         if (err) {
@@ -132,7 +132,7 @@ router.put("/workers/:id", (req, res) => {
     }
 
     connection.query(
-      "UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?",
+      "CALL UpdateWorker(?, ?, ?, ?)",
       [name, email, password, id],
       (err, results) => {
         if (err) {
@@ -164,7 +164,7 @@ router.delete("/workers/:id", (req, res) => {
       return;
     }
 
-    connection.query("DELETE FROM users WHERE id = ?", [id], (err, results) => {
+    connection.query("CALL DeleteWorker(?)", [id], (err, results) => {
       if (err) {
         console.error("Error deleting worker:", err);
         res.status(500).send("Error deleting worker");
