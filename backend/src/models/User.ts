@@ -1,84 +1,110 @@
-// import db from "../config/database.js";
-// import bcrypt from "bcryptjs";
-
-// export const create = async (username, email, password) => {
-//   const hashedPassword = await bcrypt.hash(password, 10);
-//   const [result] = await db.query(
-//     "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-//     [username, email, hashedPassword]
-//   );
-//   return result.insertId;
-// };
-
-// export const findByEmail = async (email) => {
-//   const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-//   return rows[0];
-// };
-
-// export const findById = async (id) => {
-//   const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
-//   return rows[0];
-// };
-
-// export const updateUser = async (id, updates) => {
-//   const keys = Object.keys(updates);
-//   const values = Object.values(updates);
-//   const query = `UPDATE users SET ${keys
-//     .map((key) => `${key} = ?`)
-//     .join(", ")} WHERE id = ?`;
-//   await db.query(query, [...values, id]);
-// };
-
-// export const deleteUser = async (id) => {
-//   await db.query("DELETE FROM users WHERE id = ?", [id]);
-// };
-
-import db from "../config/database";
 import bcrypt from "bcryptjs";
 import { RowDataPacket, ResultSetHeader } from 'mysql2';
+import { getConnection } from "../config/database";
+import { getDatabase } from "../helpers/datbaseContext";
 
 interface User {
   id: number;
-  username: string;
+  name: string;
   email: string;
   password: string;
 }
 
-export const create = async (username: string, email: string, password: string): Promise<number> => {
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const [result] = await db.query<ResultSetHeader>(
-    "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-    [username, email, hashedPassword]
-  );
-  return result.insertId;
+const DATABASE_NAME = 'database1';
+
+export const create = async (name: string, email: string, password: string): Promise<number> => {
+  const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+  const database = getDatabase();
+
+  // Use async/await to get the connection
+  const connection = await getConnection(database);
+
+  // Perform the database query using .then and .catch
+  return connection.query<ResultSetHeader>(
+    "INSERT INTO patients (name, email, password) VALUES (?, ?, ?)",
+    [name, email, hashedPassword]
+  )
+  .then(([result]) => {
+    connection.release(); // Release the connection
+    return result.insertId; // Return the ID of the inserted record
+  })
+  .catch((queryError) => {
+    connection.release(); // Ensure the connection is released even if there's an error
+    console.error('Error executing query:', queryError);
+    throw queryError; // Propagate the error
+  });
 };
 
 export const findByEmail = async (email: string): Promise<User | null> => {
-  const [rows] = await db.query<RowDataPacket[]>(
-    "SELECT * FROM users WHERE email = ?",
+  const database = getDatabase();
+  const connection = await getConnection(database);
+
+  return connection.query<RowDataPacket[]>(
+    "SELECT * FROM patients WHERE email = ?",
     [email]
-  );
-  return rows.length > 0 ? (rows[0] as User) : null;
+  )
+  .then(([rows]) => {
+    connection.release();
+    return rows.length > 0 ? (rows[0] as User) : null;
+  })
+  .catch((error) => {
+    connection.release();
+    console.error('Error querying by email:', error);
+    throw error;
+  });
 };
 
 export const findById = async (id: number): Promise<User | null> => {
-  const [rows] = await db.query<RowDataPacket[]>(
-    "SELECT * FROM users WHERE id = ?",
+  const database = getDatabase();
+  const connection = await getConnection(database);
+
+  return connection.query<RowDataPacket[]>(
+    "SELECT * FROM patients WHERE id = ?",
     [id]
-  );
-  return rows.length > 0 ? (rows[0] as User) : null;
+  )
+  .then(([rows]) => {
+    connection.release();
+    return rows.length > 0 ? (rows[0] as User) : null;
+  })
+  .catch((error) => {
+    connection.release();
+    console.error('Error querying by ID:', error);
+    throw error;
+  });
 };
 
 export const updateUser = async (id: number, updates: Partial<User>): Promise<void> => {
-  const keys = Object.keys(updates);
-  const values = Object.values(updates);
-  const query = `UPDATE users SET ${keys
-    .map((key) => `${key} = ?`)
-    .join(", ")} WHERE id = ?`;
-  await db.query(query, [...values, id]);
+  const database = getDatabase();
+  const connection = await getConnection(database);
+
+  // Directly specify the fields to be updated
+  const query = `UPDATE patients SET name = COALESCE(?, name), email = COALESCE(?, email), password = COALESCE(?, password) WHERE id = ?`;
+
+  const { name, email, password } = updates;
+
+  return connection.query(query, [name, email, password, id])
+    .then(() => {
+      connection.release();
+    })
+    .catch((error) => {
+      connection.release();
+      console.error('Error updating user:', error);
+      throw error;
+    });
 };
 
 export const deleteUser = async (id: number): Promise<void> => {
-  await db.query("DELETE FROM users WHERE id = ?", [id]);
+  const database = getDatabase();
+  const connection = await getConnection(database);
+
+  return connection.query("DELETE FROM patients WHERE id = ?", [id])
+  .then(() => {
+    connection.release();
+  })
+  .catch((error) => {
+    connection.release();
+    console.error('Error deleting user:', error);
+    throw error;
+  });
 };
 
