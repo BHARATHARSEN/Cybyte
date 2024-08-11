@@ -7,6 +7,6 @@ const router = express.Router();
 import { Request, Response } from 'express';
 
 // Type definition for route handler
-router.get('/:id', (req: Request, res: Response) => handleRequest(req, res));
+router.get('/switch', (req: Request, res: Response) => handleRequest(req, res));
 
 export default router;
