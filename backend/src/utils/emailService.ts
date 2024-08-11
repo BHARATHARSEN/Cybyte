@@ -1,29 +1,9 @@
-// import nodemailer from "nodemailer";
-
-// const transporter = nodemailer.createTransport({
-//   // Configure your email service here
-// });
-
-// export const sendResetPasswordEmail = async (email, token) => {
-//   const resetUrl = `http://yourfrontend.com/reset-password?token=${token}`;
-
-//   try {
-//     await transporter.sendMail({
-//       to: email,
-//       subject: "Password Reset",
-//       html: `Click <a href="${resetUrl}">here</a> to reset your password.`,
-//     });
-//   } catch (error) {
-//     console.error("Error sending email:", error);
-//     throw error;
-//   }
-// };
 
 import nodemailer from 'nodemailer';
 
-// Configure your email service here
+// email service
 const transporter = nodemailer.createTransport({
-  // Example configuration, update with your settings
+  // Example configuration, update with settings
   service: 'Gmail',
   auth: {
     user: process.env.SMTP_USER,
@@ -32,7 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendResetPasswordEmail = async (email: string, token: string): Promise<void> => {
-  const resetUrl = `http://yourfrontend.com/reset-password?token=${token}`;
+  const resetUrl = `http://frontend.com/reset-password?token=${token}`;
 
   try {
     await transporter.sendMail({
