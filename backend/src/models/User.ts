@@ -10,28 +10,26 @@ interface User {
   password: string;
 }
 
-const DATABASE_NAME = 'database1';
 
 export const create = async (name: string, email: string, password: string): Promise<number> => {
   const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
   const database = getDatabase();
 
-  // Use async/await to get the connection
   const connection = await getConnection(database);
 
-  // Perform the database query using .then and .catch
+  // Perform the database query 
   return connection.query<ResultSetHeader>(
     "INSERT INTO patients (name, email, password) VALUES (?, ?, ?)",
     [name, email, hashedPassword]
   )
   .then(([result]) => {
-    connection.release(); // Release the connection
-    return result.insertId; // Return the ID of the inserted record
+    connection.release(); // Releasing the connection
+    return result.insertId; // Returning the ID of the inserted record
   })
   .catch((queryError) => {
-    connection.release(); // Ensure the connection is released even if there's an error
+    connection.release();
     console.error('Error executing query:', queryError);
-    throw queryError; // Propagate the error
+    throw queryError;
   });
 };
 
