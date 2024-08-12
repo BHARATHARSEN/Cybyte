@@ -1,7 +1,7 @@
 import express from "express";
 import userRoutes from "./routes/userRoutes";
 import dotenv from "dotenv";
-import { handleRequest } from "./routes/dummy";
+import { handleRequest } from "./middlewares/dummy";
 
 // Loading environment variables from .env file
 dotenv.config();
