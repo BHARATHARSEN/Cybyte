@@ -5,7 +5,7 @@ import { setDatabase } from '../helpers/datbaseContext';
 export const handleRequest = (req: Request, res: Response, next:NextFunction): void => {
     const {id} = req.body;
 
-    // Determine the database based on the id
+    // Determining the database based on the id
     let database: string;
     switch (id) {
         case '1':
