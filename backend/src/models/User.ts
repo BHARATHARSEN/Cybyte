@@ -12,7 +12,7 @@ interface User {
 
 
 export const create = async (name: string, email: string, password: string): Promise<number> => {
-  const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+  const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
   const database = getDatabase();
 
   const connection = await getConnection(database);
@@ -75,7 +75,7 @@ export const updateUser = async (id: number, updates: Partial<User>): Promise<vo
   const database = getDatabase();
   const connection = await getConnection(database);
 
-  // Directly specify the fields to be updated
+  // Directly specifying the fields to be updated
   const query = `UPDATE patients SET name = COALESCE(?, name), email = COALESCE(?, email), password = COALESCE(?, password) WHERE id = ?`;
 
   const { name, email, password } = updates;
