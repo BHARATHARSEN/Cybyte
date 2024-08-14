@@ -14,7 +14,14 @@ export const createUser = (req: Request, res: Response): void => {
       res.status(201).json({ message: 'User created successfully', userId });
     })
     .catch(error => {
-      res.status(500).json({ message: 'Error creating user', error: (error as Error).message });
+      if (error.code === 'ER_DUP_ENTRY') {
+        //Duplicate entry error
+        res.status(409).json({ message: 'Email already in use', error: error.message });
+      } else if (error.name === 'ValidationError') {
+        res.status(422).json({ message: 'Validation error', error: error.message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+      }
     });
 };
 
@@ -38,7 +45,11 @@ export const loginUser = (req: Request, res: Response): void => {
         });
     })
     .catch(error => {
-      res.status(500).json({ message: 'Error logging in', error: (error as Error).message });
+      if (error.name === 'DatabaseError') {
+        res.status(503).json({ message: 'Service Unavailable', error: error.message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+      }
     });
 };
 
@@ -59,7 +70,11 @@ export const forgotPassword = (req: Request, res: Response): void => {
         });
     })
     .catch(error => {
-      res.status(500).json({ message: 'Error processing request', error: (error as Error).message });
+      if (error.name === 'EmailServiceError') {
+        res.status(503).json({ message: 'Email service unavailable', error: error.message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+      }
     });
 };
 
@@ -81,7 +96,11 @@ export const resetPassword = (req: Request, res: Response): void => {
         res.json({ message: 'Password reset successful' });
       })
       .catch(error => {
-        res.status(500).json({ message: 'Error updating password', error: (error as Error).message });
+        if (error.name === 'DatabaseError') {
+          res.status(503).json({ message: 'Service Unavailable', error: error.message });
+        } else {
+          res.status(500).json({ message: 'Internal Server Error', error: error.message });
+        }
       });
   });
 };
@@ -96,7 +115,13 @@ export const updateUser = (req: Request, res: Response): void => {
       res.json({ message: 'User updated successfully' });
     })
     .catch(error => {
-      res.status(500).json({ message: 'Error updating user', error: (error as Error).message });
+      if (error.name === 'NotFoundError') {
+        res.status(404).json({ message: 'User not found', error: error.message });
+      } else if (error.name === 'ValidationError') {
+        res.status(422).json({ message: 'Validation error', error: error.message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+      }
     });
 };
 
@@ -109,7 +134,13 @@ export const deleteUser = (req: Request, res: Response): void => {
       res.json({ message: 'User deleted successfully' });
     })
     .catch(error => {
-      res.status(500).json({ message: 'Error deleting user', error: (error as Error).message });
+      if (error.name === 'NotFoundError') {
+        res.status(404).json({ message: 'User not found', error: error.message });
+      } else if (error.name === 'DatabaseError') {
+        res.status(503).json({ message: 'Service Unavailable', error: error.message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+      }
     });
 };
 
