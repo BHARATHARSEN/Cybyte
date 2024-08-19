@@ -17,18 +17,21 @@ export class FormPageComponent {
 
   constructor(private fb : FormBuilder, private http : HttpClient){
     this.form = this.fb.group({
-      text: ['', Validators.required],
-      multilineText: ['', Validators.required],
+      text: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]], // Alphanumeric and spaces
+      multilineText: ['', [Validators.required, Validators.minLength(5)]], // Minimum 5 characters
       email: ['', [Validators.required, Validators.email]],
-      telephone: ['', Validators.required],
-      number: ['', Validators.required],
-      date: ['', Validators.required],
-      time: ['', Validators.required],
-      timestamp: ['', Validators.required],
+      telephone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]], // Exactly 10 digits
+      number: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Only digits
+      date: ['', [Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/)]], // YYYY-MM-DD format
+      time: ['', [Validators.required, Validators.pattern(/^\d{2}:\d{2}(:\d{2})?$/)]], // HH:MM or HH:MM:SS format
+      timestamp: ['', [Validators.required]],
       checkbox: [false],
       dropdown: ['', Validators.required],
       radioList: ['', Validators.required],
-      checkboxList: this.fb.array([], Validators.required),
+      checkboxList: this.fb.array([
+        this.fb.control(false),
+        this.fb.control(false),
+      ], Validators.required),
       pdfFile: [null, Validators.required],
       imageFile: [null, Validators.required],
       listBox: ['', Validators.required]
@@ -39,6 +42,15 @@ export class FormPageComponent {
 
   get checkboxList() {
     return this.form.get('checkboxList') as FormArray;
+  }
+
+  get checkboxListControls() {
+    return (this.form.get('checkboxList') as FormArray).controls;
+  }
+
+  get checkboxListInvalid() {
+    const controls = this.form.get('checkboxList') as FormArray;
+    return controls.controls.every(control => !control.value);
   }
 
   onCheckboxChange(event: Event) {
