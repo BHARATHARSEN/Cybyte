@@ -1,97 +1,195 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="container mt-4">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="container mt-5">
+
+    <!-- Textbox -->
     <div class="mb-3">
-      <label for="text" class="form-label">Text:</label>
+      <label for="text" class="form-label">Text</label>
       <input id="text" formControlName="text" class="form-control" />
-    </div>
-  
-    <div class="mb-3">
-      <label for="multilineText" class="form-label">Multi-line Text:</label>
-      <textarea id="multilineText" formControlName="multilineText" class="form-control"></textarea>
-    </div>
-  
-    <div class="mb-3">
-      <label for="email" class="form-label">Email:</label>
-      <input id="email" type="email" formControlName="email" class="form-control" />
-    </div>
-  
-    <div class="mb-3">
-      <label for="telephone" class="form-label">Telephone:</label>
-      <input id="telephone" formControlName="telephone" class="form-control" />
-    </div>
-  
-    <div class="mb-3">
-      <label for="number" class="form-label">Number:</label>
-      <input id="number" type="number" formControlName="number" class="form-control" />
-    </div>
-  
-    <div class="mb-3">
-      <label for="date" class="form-label">Date:</label>
-      <input id="date" type="date" formControlName="date" class="form-control" />
-    </div>
-  
-    <div class="mb-3">
-      <label for="time" class="form-label">Time:</label>
-      <input id="time" type="time" formControlName="time" class="form-control" />
-    </div>
-  
-    <div class="mb-3">
-      <label for="timestamp" class="form-label">Timestamp:</label>
-      <input id="timestamp" type="datetime-local" formControlName="timestamp" class="form-control" />
-    </div>
-  
-    <div class="mb-3 form-check">
-      <input id="checkbox" type="checkbox" formControlName="checkbox" class="form-check-input" />
-      <label for="checkbox" class="form-check-label">Checkbox:</label>
-    </div>
-  
-    <div class="mb-3">
-      <label for="dropdown" class="form-label">Dropdown:</label>
-      <select id="dropdown" formControlName="dropdown" class="form-select">
-        <option value="">Select...</option>
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
-      </select>
-    </div>
-  
-    <div class="mb-3">
-      <label class="form-label">Radio List:</label>
-      <div class="form-check">
-        <input type="radio" formControlName="radioList" value="option1" class="form-check-input" id="radio1" />
-        <label class="form-check-label" for="radio1">Option 1</label>
-      </div>
-      <div class="form-check">
-        <input type="radio" formControlName="radioList" value="option2" class="form-check-input" id="radio2" />
-        <label class="form-check-label" for="radio2">Option 2</label>
+      <div *ngIf="form.get('text')?.invalid && form.get('text')?.touched" class="text-danger">
+        <div *ngIf="form.get('text')?.errors?.['required']">Text is required.</div>
+        <div *ngIf="form.get('text')?.errors?.['pattern']">Invalid format. Only alphanumeric characters and spaces are allowed.</div>
       </div>
     </div>
   
+    <!-- Multi-line Text (Textarea) -->
     <div class="mb-3">
-      <label class="form-label">Checkbox List:</label>
-      <div *ngFor="let item of ['Item1', 'Item2', 'Item3']" class="form-check">
-        <input type="checkbox" [value]="item" (change)="onCheckboxChange($event)" class="form-check-input" id="{{item}}" />
-        <label class="form-check-label" for="{{item}}">{{item}}</label>
+      <label for="multilineText" class="form-label">Multi-line Text</label>
+      <textarea id="multilineText" formControlName="multilineText" class="form-control" rows="3"></textarea>
+      <div *ngIf="form.get('multilineText')?.invalid && form.get('multilineText')?.touched" class="text-danger">
+        <div *ngIf="form.get('multilineText')?.errors?.['required']">This field is required.</div>
+        <div *ngIf="form.get('multilineText')?.errors?.['minlength']">Must be at least 5 characters long.</div>
       </div>
     </div>
   
+    <!-- Email -->
     <div class="mb-3">
-      <label for="pdfFile" class="form-label">PDF File:</label>
-      <input id="pdfFile" type="file" (change)="onFileChange($event, 'pdfFile')" class="form-control" />
+      <label for="email" class="form-label">Email</label>
+      <input id="email" formControlName="email" type="email" class="form-control" />
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-danger">
+        <div *ngIf="form.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="form.get('email')?.errors?.['email']">Invalid email format.</div>
+      </div>
     </div>
   
+    <!-- Telephone -->
     <div class="mb-3">
-      <label for="imageFile" class="form-label">Image File:</label>
-      <input id="imageFile" type="file" (change)="onFileChange($event, 'imageFile')" class="form-control" />
+      <label for="telephone" class="form-label">Telephone</label>
+      <input id="telephone" formControlName="telephone" type="tel" class="form-control" />
+      <div *ngIf="form.get('telephone')?.invalid && form.get('telephone')?.touched" class="text-danger">
+        <div *ngIf="form.get('telephone')?.errors?.['required']">Telephone number is required.</div>
+        <div *ngIf="form.get('telephone')?.errors?.['pattern']">Must be exactly 10 digits.</div>
+      </div>
     </div>
   
+    <!-- Number -->
     <div class="mb-3">
-      <label for="listBox" class="form-label">List Box:</label>
-      <select id="listBox" formControlName="listBox" class="form-select">
-        <option value="">Select...</option>
-        <option value="item1">Item 1</option>
-        <option value="item2">Item 2</option>
-      </select>
+      <label for="number" class="form-label">Number</label>
+      <input id="number" formControlName="number" type="number" class="form-control" />
+      <div *ngIf="form.get('number')?.invalid && form.get('number')?.touched" class="text-danger">
+        <div *ngIf="form.get('number')?.errors?.['required']">Number is required.</div>
+        <div *ngIf="form.get('number')?.errors?.['pattern']">Must be a valid number.</div>
+      </div>
     </div>
   
+    <!-- Date -->
+    <div class="mb-3">
+      <label for="date" class="form-label">Date</label>
+      <input id="date" formControlName="date" type="date" class="form-control" />
+      <div *ngIf="form.get('date')?.invalid && form.get('date')?.touched" class="text-danger">
+        <div *ngIf="form.get('date')?.errors?.['required']">Date is required.</div>
+        <div *ngIf="form.get('date')?.errors?.['pattern']">Invalid date format. Use YYYY-MM-DD.</div>
+      </div>
+    </div>
+  
+    <!-- Time -->
+  <div class="mb-3">
+    <label for="time" class="form-label">Time</label>
+    <input id="time" formControlName="time" type="time" class="form-control" />
+    <div *ngIf="form.get('time')?.invalid && form.get('time')?.touched" class="text-danger">
+      <div *ngIf="form.get('time')?.errors?.['required']">Time is required.</div>
+      <div *ngIf="form.get('time')?.errors?.['pattern']">Invalid time format. Use HH:MM or HH:MM:SS.</div>
+    </div>
+  </div>
+  
+    <!-- Timestamp -->
+  <div class="mb-3">
+    <label for="timestamp" class="form-label">Timestamp</label>
+    <input id="timestamp" formControlName="timestamp" type="datetime-local" class="form-control" />
+    <div *ngIf="form.get('timestamp')?.invalid && form.get('timestamp')?.touched" class="text-danger">
+      <div *ngIf="form.get('timestamp')?.errors?.['required']">Timestamp is required.</div>
+      <div *ngIf="form.get('timestamp')?.errors?.['pattern']">Invalid timestamp format. Use ISO 8601.</div>
+    </div>
+  </div>
+
+  <!-- Checkbox -->
+  <div class="mb-3 form-check">
+    <input id="checkbox" formControlName="checkbox" type="checkbox" class="form-check-input" />
+    <label for="checkbox" class="form-check-label">Checkbox</label>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="mb-3">
+    <label for="dropdown" class="form-label">Dropdown</label>
+    <select id="dropdown" formControlName="dropdown" class="form-select">
+      <option value="">Select an option</option>
+      <option value="option1">Option 1</option>
+      <option value="option2">Option 2</option>
+    </select>
+    <div *ngIf="form.get('dropdown')?.invalid && form.get('dropdown')?.touched" class="text-danger">
+      <div *ngIf="form.get('dropdown')?.errors?.['required']">Please select an option.</div>
+    </div>
+  </div>
+
+  <!-- Radio List -->
+  <div class="mb-3">
+    <label class="form-label">Radio List</label>
+    <div class="form-check">
+      <input type="radio" id="radio1" formControlName="radioList" value="option1" class="form-check-input" />
+      <label for="radio1" class="form-check-label">Option 1</label>
+    </div>
+    <div class="form-check">
+      <input type="radio" id="radio2" formControlName="radioList" value="option2" class="form-check-input" />
+      <label for="radio2" class="form-check-label">Option 2</label>
+    </div>
+    <div *ngIf="form.get('radioList')?.invalid && form.get('radioList')?.touched" class="text-danger">
+      <div *ngIf="form.get('radioList')?.errors?.['required']">Please select an option.</div>
+    </div>
+  </div>
+
+  <!-- Checkbox List -->
+<div formArrayName="checkboxList">
+    <label class="form-label">Checkbox List</label>
+    <div *ngFor="let control of checkboxListControls; let i = index">
+      <input 
+        type="checkbox" 
+        [formControlName]="i" 
+        (change)="onCheckboxChange($event)" 
+        class="form-check-input" 
+        [value]="i + 1" 
+      />
+      <label class="form-check-label" for="checkbox{{i}}">
+        Option {{i + 1}}
+      </label>
+    </div>
+    <div *ngIf="checkboxListInvalid" class="text-danger">
+      Please select at least one option.
+    </div>
+  </div>
+
+  <!-- PDF File -->
+  <div class="mb-3">
+    <label for="pdfFile" class="form-label">PDF File</label>
+    <input id="pdfFile" formControlName="pdfFile" type="file" class="form-control" (change)="onFileChange($event, 'pdfFile')" accept=".pdf" />
+    <div *ngIf="form.get('pdfFile')?.invalid && form.get('pdfFile')?.touched" class="text-danger">
+      <div *ngIf="form.get('pdfFile')?.errors?.['required']">PDF file is required.</div>
+    </div>
+  </div>
+
+  <!-- Image File -->
+  <div class="mb-3">
+    <label for="imageFile" class="form-label">Image File</label>
+    <input id="imageFile" formControlName="imageFile" type="file" class="form-control" (change)="onFileChange($event, 'imageFile')" accept="image/*" />
+    <div *ngIf="form.get('imageFile')?.invalid && form.get('imageFile')?.touched" class="text-danger">
+      <div *ngIf="form.get('imageFile')?.errors?.['required']">Image file is required.</div>
+    </div>
+  </div>
+
+  <!-- List Box -->
+  <div class="mb-3">
+    <label for="listBox" class="form-label">List Box</label>
+    <select id="listBox" formControlName="listBox" class="form-select" multiple>
+      <option value="option1">Option 1</option>
+      <option value="option2">Option 2</option>
+      <option value="option3">Option 3</option>
+    </select>
+    <div *ngIf="form.get('listBox')?.invalid && form.get('listBox')?.touched" class="text-danger">
+      <div *ngIf="form.get('listBox')?.errors?.['required']">Please select at least one option.</div>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="mb-3">
     <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  </div>
+
+</form>
   
+
+
+
+
+
+
+
+
+
+
+  <!-- Checkbox List
+  <div formArrayName="checkboxList">
+    <label>Checkbox List</label>
+    <div *ngFor="let control of checkboxListControls; let i = index">
+      <input type="checkbox" [formControlName]="i" />
+    </div>
+    <div *ngIf="checkboxListControls.length > 0 && checkboxListInvalid">
+      Please select at least one option.
+    </div>
+  </div> -->
