@@ -1,0 +1,97 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="container mt-4">
+    <div class="mb-3">
+      <label for="text" class="form-label">Text:</label>
+      <input id="text" formControlName="text" class="form-control" />
+    </div>
+  
+    <div class="mb-3">
+      <label for="multilineText" class="form-label">Multi-line Text:</label>
+      <textarea id="multilineText" formControlName="multilineText" class="form-control"></textarea>
+    </div>
+  
+    <div class="mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input id="email" type="email" formControlName="email" class="form-control" />
+    </div>
+  
+    <div class="mb-3">
+      <label for="telephone" class="form-label">Telephone:</label>
+      <input id="telephone" formControlName="telephone" class="form-control" />
+    </div>
+  
+    <div class="mb-3">
+      <label for="number" class="form-label">Number:</label>
+      <input id="number" type="number" formControlName="number" class="form-control" />
+    </div>
+  
+    <div class="mb-3">
+      <label for="date" class="form-label">Date:</label>
+      <input id="date" type="date" formControlName="date" class="form-control" />
+    </div>
+  
+    <div class="mb-3">
+      <label for="time" class="form-label">Time:</label>
+      <input id="time" type="time" formControlName="time" class="form-control" />
+    </div>
+  
+    <div class="mb-3">
+      <label for="timestamp" class="form-label">Timestamp:</label>
+      <input id="timestamp" type="datetime-local" formControlName="timestamp" class="form-control" />
+    </div>
+  
+    <div class="mb-3 form-check">
+      <input id="checkbox" type="checkbox" formControlName="checkbox" class="form-check-input" />
+      <label for="checkbox" class="form-check-label">Checkbox:</label>
+    </div>
+  
+    <div class="mb-3">
+      <label for="dropdown" class="form-label">Dropdown:</label>
+      <select id="dropdown" formControlName="dropdown" class="form-select">
+        <option value="">Select...</option>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+      </select>
+    </div>
+  
+    <div class="mb-3">
+      <label class="form-label">Radio List:</label>
+      <div class="form-check">
+        <input type="radio" formControlName="radioList" value="option1" class="form-check-input" id="radio1" />
+        <label class="form-check-label" for="radio1">Option 1</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" formControlName="radioList" value="option2" class="form-check-input" id="radio2" />
+        <label class="form-check-label" for="radio2">Option 2</label>
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label class="form-label">Checkbox List:</label>
+      <div *ngFor="let item of ['Item1', 'Item2', 'Item3']" class="form-check">
+        <input type="checkbox" [value]="item" (change)="onCheckboxChange($event)" class="form-check-input" id="{{item}}" />
+        <label class="form-check-label" for="{{item}}">{{item}}</label>
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="pdfFile" class="form-label">PDF File:</label>
+      <input id="pdfFile" type="file" (change)="onFileChange($event, 'pdfFile')" class="form-control" />
+    </div>
+  
+    <div class="mb-3">
+      <label for="imageFile" class="form-label">Image File:</label>
+      <input id="imageFile" type="file" (change)="onFileChange($event, 'imageFile')" class="form-control" />
+    </div>
+  
+    <div class="mb-3">
+      <label for="listBox" class="form-label">List Box:</label>
+      <select id="listBox" formControlName="listBox" class="form-select">
+        <option value="">Select...</option>
+        <option value="item1">Item 1</option>
+        <option value="item2">Item 2</option>
+      </select>
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  
