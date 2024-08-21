@@ -1,0 +1,43 @@
+<div class="container">
+    <!-- Title Section -->
+    <div class="text-center mb-5">
+      <h1 class="main-title">CYBYTE</h1>
+      <h2 class="sub-title">SIGN UP</h2>
+    </div>
+  
+    <!-- Signup Form -->
+    <form [formGroup]="signUp" (ngSubmit)="onSubmit()" class="sign-up-form">
+      <div class="form-group mb-3">
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" type="text" class="form-control form-control-sm" placeholder="Enter your name" />
+        <div *ngIf="signUp.get('name')?.invalid && signUp.get('name')?.touched" class="invalid-feedback">
+          <div *ngIf="signUp.get('name')?.errors?.['required']">Name is required.</div>
+        </div>
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" class="form-control form-control-sm" placeholder="Enter your email" />
+        <div *ngIf="signUp.get('email')?.invalid && signUp.get('email')?.touched" class="invalid-feedback">
+          <div *ngIf="signUp.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="signUp.get('email')?.errors?.['email']">Invalid email format.</div>
+        </div>
+      </div>
+  
+      <div class="form-group mb-3">
+        <label for="password">Password</label>
+        <input id="password" formControlName="password" type="password" class="form-control form-control-sm" placeholder="Enter your password" />
+        <div *ngIf="signUp.get('password')?.invalid && signUp.get('password')?.touched" class="invalid-feedback">
+          <div *ngIf="signUp.get('password')?.errors?.['required']">Password is required.</div>
+          <div *ngIf="signUp.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="signUp.invalid" class="btn btn-primary btn-sm">Sign Up</button>
+  
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+  

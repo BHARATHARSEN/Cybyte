@@ -1,0 +1,63 @@
+// General container styles
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 1rem;
+  }
+  
+  // Title and subheader styles
+  .text-center {
+    margin-bottom: 3rem; // Increased spacing for more room between title and form
+  }
+  
+  .main-title {
+    font-size: 4rem; // Larger font size for main title
+    font-weight: 700;
+    color: #ab7a31;
+    margin-bottom: 1rem; // Increased space below the main title
+    padding-bottom: 0.5rem; // Added padding below the title
+    
+  }
+  
+  .sub-title {
+    font-size: 2.5rem; // Smaller font size for subheader
+    font-weight: 400;
+    color: #6c757d;
+    margin-bottom: 2rem; // Added space below the subheader
+    padding-top: 0.5rem; // Added padding above the subheader
+  }
+  
+  // Form styles
+  .sign-up-form {
+    background: #c6d3e0;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  // Input fields
+  .form-control-sm {
+    height: calc(1.5em + .75rem + 2px);
+    font-size: 0.875rem;
+    border-radius: 0.25rem;
+  }
+  
+  // Button styles
+  .btn-primary {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    border-radius: 0.25rem;
+  }
+  
+  // Error messages
+  .invalid-feedback {
+    display: block;
+    font-size: 0.875em;
+    color: #dc3545;
+  }
+  
+  .alert-danger {
+    margin-top: 1rem;
+    font-size: 0.875em;
+  }
+  
