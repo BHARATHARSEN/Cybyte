@@ -33,12 +33,12 @@ export class LoginPageComponent {
           next: (response: any) => {
             console.log('Login successful:', response);
 
-            // Store the token in localStorage
+            // Storing the token in localStorage
             const token = response.token;
             localStorage.setItem('token', token);
 
-            // Navigate to the form page
-            this.routerService.navigateTo('/form'); // Correct method call
+            
+            this.routerService.navigateTo('/form'); 
           },
           error: (error) => {
             console.error('Error logging in:', error);
