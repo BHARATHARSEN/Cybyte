@@ -3,11 +3,14 @@ import { getConnection } from '../config/database';
 import { setDatabase } from '../helpers/datbaseContext';
 
 export const handleRequest = (req: Request, res: Response, next:NextFunction): void => {
-    const {id} = req.body;
+    const { id = '' } = req.body; // Default to '' if id is undefined
+
+    console.log(req.body);
 
     // Determining the database based on the id
     let database: string;
     switch (id) {
+        case '':
         case '1':
             database = 'database1';
             break;
