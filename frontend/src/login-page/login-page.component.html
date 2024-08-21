@@ -1,0 +1,35 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card p-4 shadow-sm border-0">
+          <div class="text-center mb-4">
+            <span class="d-block fs-5 text-primary">Cybyte</span>
+            <header class="h4">LOGIN</header>
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+  
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input id="email" type="text" class="form-control" placeholder="email" formControlName="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input id="password" type="password" class="form-control" placeholder="password" formControlName="password" required>
+            </div>
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+  
+            <div class="text-center">
+              <a href="#" class="text-decoration-none">Forgot Password ?</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
