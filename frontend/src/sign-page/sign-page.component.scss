@@ -1,4 +1,4 @@
-// General container styles
+
 .container {
     max-width: 600px;
     margin: auto;
@@ -7,24 +7,24 @@
   
   // Title and subheader styles
   .text-center {
-    margin-bottom: 3rem; // Increased spacing for more room between title and form
+    margin-bottom: 3rem; 
   }
   
   .main-title {
-    font-size: 4rem; // Larger font size for main title
+    font-size: 4rem; 
     font-weight: 700;
     color: #ab7a31;
-    margin-bottom: 1rem; // Increased space below the main title
-    padding-bottom: 0.5rem; // Added padding below the title
+    margin-bottom: 1rem; 
+    padding-bottom: 0.5rem; 
     
   }
   
   .sub-title {
-    font-size: 2.5rem; // Smaller font size for subheader
+    font-size: 2.5rem; 
     font-weight: 400;
     color: #6c757d;
-    margin-bottom: 2rem; // Added space below the subheader
-    padding-top: 0.5rem; // Added padding above the subheader
+    margin-bottom: 2rem; 
+    padding-top: 0.5rem; 
   }
   
   // Form styles

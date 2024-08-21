@@ -37,14 +37,14 @@ export class SignUpPageComponent {
           next: (response: any) => {
             console.log('Sign up successful:', response);
 
-            // Show success message
+            // Showing success message
             this.snackBar.open('Sign Up Successful', 'Close', {
               duration: 3000,
               verticalPosition: 'top',
               horizontalPosition: 'center'
             });
 
-            // Navigate to the login page or other route
+            
             this.routerService.navigateTo('/login');
           },
           error: (error) => {
