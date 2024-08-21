@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, FormArray } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -13,31 +14,29 @@ import { RouterModule } from '@angular/router';
   styleUrl: './form-page.component.scss'
 })
 export class FormPageComponent {
-  form : FormGroup;
+  form: FormGroup;
 
-  constructor(private fb : FormBuilder, private http : HttpClient){
+  constructor(private fb: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) {
     this.form = this.fb.group({
-      text: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]], // Alphanumeric and spaces
-      multilineText: ['', [Validators.required, Validators.minLength(5)]], // Minimum 5 characters
-      email: ['', [Validators.required, Validators.email]],
-      telephone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]], // Exactly 10 digits
-      number: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Only digits
-      date: ['', [Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/)]], // YYYY-MM-DD format
-      time: ['', [Validators.required, Validators.pattern(/^\d{2}:\d{2}(:\d{2})?$/)]], // HH:MM or HH:MM:SS format
+      text: ['', [Validators.required]] , // Alphanumeric and spaces
+      multilineText: ['', [Validators.required]], // Minimum 5 characters
+      email: ['', [Validators.required]],
+      telephone: ['', [Validators.required]], // Exactly 10 digits
+      number: ['', [Validators.required]], // Only digits
+      date: ['', [Validators.required]], // YYYY-MM-DD format
+      time: ['', [Validators.required]], // HH:MM or HH:MM:SS format
       timestamp: ['', [Validators.required]],
       checkbox: [false],
       dropdown: ['', Validators.required],
       radioList: ['', Validators.required],
       checkboxList: this.fb.array([
         this.fb.control(false),
-        this.fb.control(false),
+        this.fb.control(false)
       ], Validators.required),
-      pdfFile: [null, Validators.required],
-      imageFile: [null, Validators.required],
+      pdfFile: [],
+      imageFile: [],
       listBox: ['', Validators.required]
-
     });
-
   }
 
   get checkboxList() {
@@ -45,54 +44,96 @@ export class FormPageComponent {
   }
 
   get checkboxListControls() {
-    return (this.form.get('checkboxList') as FormArray).controls;
+    return this.checkboxList.controls;
   }
 
   get checkboxListInvalid() {
-    const controls = this.form.get('checkboxList') as FormArray;
-    return controls.controls.every(control => !control.value);
+    return this.checkboxList.controls.every(control => !control.value);
   }
 
   onCheckboxChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (input.checked) {
-      this.checkboxList.push(this.fb.control(input.value));
-    } else {
-      const index = this.checkboxList.controls.findIndex(control => control.value === input.value);
-      if (index !== -1) {
-        this.checkboxList.removeAt(index);
-      }
-    }
+    console.log('Checkbox changed:', input.value, input.checked);
   }
 
   onFileChange(event: Event, controlName: string) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
+      console.log(`File selected for ${controlName}:`, input.files[0]);
       this.form.get(controlName)?.setValue(input.files[0]);
     }
   }
 
   onSubmit() {
     if (this.form.valid) {
-      const formData = new FormData();
-      
-      // Append form values to FormData
-      for (const key in this.form.value) {
-        const value = this.form.value[key];
-        if (value instanceof File) {
-          formData.append(key, value);
-        } else if (Array.isArray(value)) {
-          value.forEach((item: any) => formData.append(key, item));
-        } else {
-          formData.append(key, value);
-        }
+      // Extract form data values
+      const formDataJson = this.form.value;
+
+      const token = localStorage.getItem('token'); // Retrieve token from localStorage
+
+      if (!token) {
+        console.error('No token found');
+        return;
       }
 
-      this.http.post('http://localhost:3000/api/v1/form', formData).subscribe(response => {
-        console.log("Form submitted successfully", response);
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
       });
+
+      // Prepare form data for JSON
+      const formData = {
+          ...formDataJson,
+          pdfFile: undefined, // Exclude files for now
+          imageFile: undefined // Exclude files for now
+      };
+  
+      // // Loop through each control and append the appropriate data
+      // Object.keys(this.form.controls).forEach(key => {
+      //   const controlValue = this.form.get(key)?.value;
+  
+      //   if (controlValue instanceof File) {
+      //     formData.append(key, controlValue);
+      //   } else if (Array.isArray(controlValue)) {
+      //     // Append arrays as a JSON string
+      //     formData.append(key, JSON.stringify(controlValue));
+      //   } else {
+      //     formData.append(key, controlValue);
+      //   }
+      // });
+  
+      // Sending the FormData to the backend
+      this.http.post('http://localhost:3000/api/v1/form', formData, { headers, observe: 'response' }).subscribe({
+        next: (response) => {
+          console.log('Form submitted successfully:', response.body);
+
+          // Show a success message
+          this.snackBar.open('Form Submitted', 'Close', {
+            duration: 3000, // Duration in milliseconds
+            verticalPosition: 'top', // Optional, vertical position of the snackbar
+            horizontalPosition: 'center' // Optional, horizontal position of the snackbar
+          });
+        },
+        error: (error) => {
+          console.error('Error submitting form:', error);
+          if (error.status === 400) {
+            try {
+              const errorMessage = JSON.parse(error.error);
+              console.error('Parsed server error:', errorMessage);
+            } catch (e) {
+              console.error('Server error is not JSON:', error.error);
+            }
+          } else {
+            console.error('Server-side error:', error);
+          }
+        },
+        complete: () => {
+          console.log('Form submission process completed.');
+        }
+      });
+    } else {
+      console.log('Form is invalid:', this.form.errors);
     }
   }
-
+  
 }
 

@@ -1,27 +1,111 @@
-form {
-    div {
-      margin-bottom: 15px;
-    }
-  
-    label {
-      font-weight: bold;
-    }
-  
-    input, textarea, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-    }
-  
-    button {
-      background-color: #007bff;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-    }
-  
-    button:disabled {
-      background-color: #cccccc;
-    }
+/* Form container */
+
+body {
+  background-image: url(../assets/aku-1tanjiros.jpg);
+  background-size: cover; /* Cover the entire viewport */
+  background-repeat: no-repeat; /* Prevent repetition of the image     'assets/aku-1tanjiros.jpg' */
+  background-position: center; /* Center the image */
+  margin: 0; /* Remove default margin */
+  height: 100vh; /* Ensure body takes full height */
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #568fc9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form title */
+.form-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #343a40;
+}
+
+/* Form labels */
+.form-label {
+  font-weight: bold;
+  color: #495057;
+}
+
+/* Form controls */
+.form-control {
+  background-color: #fff;
+  border: 2px solid #ced4da;
+  border-radius: 8px;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Submit button */
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Error messages */
+.text-danger {
+  font-size: 0.9rem;
+  color: #e63946;
+  margin-top: 5px;
+}
+
+/* Checkbox and radio buttons */
+.form-check-input {
+  margin-right: 10px;
+  accent-color: #007bff;
+}
+
+/* File inputs */
+.form-control[type="file"] {
+  padding: 3px;
+  border: none;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+}
+
+.form-control[type="file"]:focus {
+  border: none;
+  outline: 2px solid #007bff;
+}
+
+/* List Box */
+select[multiple] {
+  height: auto;
+  background-color: #fff;
+  border: 2px solid #ced4da;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 576px) {
+  .container {
+    padding: 15px;
   }
+
+  button[type="submit"] {
+    font-size: 1rem;
+    padding: 8px;
+  }
+}

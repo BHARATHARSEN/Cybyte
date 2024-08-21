@@ -81,9 +81,10 @@
   </div>
 
   <!-- Checkbox -->
-  <div class="mb-3 form-check">
-    <input id="checkbox" formControlName="checkbox" type="checkbox" class="form-check-input" />
+  <div class="mb-3 ">
     <label for="checkbox" class="form-check-label">Checkbox</label>
+    <input id="checkbox" formControlName="checkbox" type="checkbox" class="form-check-input" />
+    
   </div>
 
   <!-- Dropdown -->
@@ -103,17 +104,19 @@
   <div class="mb-3">
     <label class="form-label">Radio List</label>
     <div class="form-check">
+      <label for="radio1" class="form-check-label" id="radio">Option 1</label>
       <input type="radio" id="radio1" formControlName="radioList" value="option1" class="form-check-input" />
-      <label for="radio1" class="form-check-label">Option 1</label>
     </div>
     <div class="form-check">
+      <label for="radio2" class="form-check-label" id="radio">Option 2</label>
       <input type="radio" id="radio2" formControlName="radioList" value="option2" class="form-check-input" />
-      <label for="radio2" class="form-check-label">Option 2</label>
+      
     </div>
     <div *ngIf="form.get('radioList')?.invalid && form.get('radioList')?.touched" class="text-danger">
       <div *ngIf="form.get('radioList')?.errors?.['required']">Please select an option.</div>
     </div>
   </div>
+  
 
   <!-- Checkbox List -->
 <div formArrayName="checkboxList">
@@ -121,12 +124,11 @@
     <div *ngFor="let control of checkboxListControls; let i = index">
       <input 
         type="checkbox" 
-        [formControlName]="i" 
-        (change)="onCheckboxChange($event)" 
+        [formControlName]="i"  
         class="form-check-input" 
-        [value]="i + 1" 
+        [id]="'checkbox' + i"
       />
-      <label class="form-check-label" for="checkbox{{i}}">
+      <label class="form-check-label" [for]="'checkbox' + i">
         Option {{i + 1}}
       </label>
     </div>
