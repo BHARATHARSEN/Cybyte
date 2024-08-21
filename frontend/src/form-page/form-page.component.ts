@@ -66,10 +66,10 @@ export class FormPageComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      // Extract form data values
+      
       const formDataJson = this.form.value;
 
-      const token = localStorage.getItem('token'); // Retrieve token from localStorage
+      const token = localStorage.getItem('token'); 
 
       if (!token) {
         console.error('No token found');
@@ -106,11 +106,11 @@ export class FormPageComponent {
         next: (response) => {
           console.log('Form submitted successfully:', response.body);
 
-          // Show a success message
+          // Success MSG
           this.snackBar.open('Form Submitted', 'Close', {
-            duration: 3000, // Duration in milliseconds
-            verticalPosition: 'top', // Optional, vertical position of the snackbar
-            horizontalPosition: 'center' // Optional, horizontal position of the snackbar
+            duration: 3000, 
+            verticalPosition: 'top', 
+            horizontalPosition: 'center' 
           });
         },
         error: (error) => {
