@@ -1,8 +1,13 @@
 import { Routes } from '@angular/router';
 import { FormPageComponent } from '../form-page/form-page.component';
+import { LoginPageComponent } from '../login-page/login-page.component';
+import { authGuard } from '../authGuard';
+import { SignUpPageComponent } from '../sign-page/sign-page.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/form', pathMatch: 'full' }, // Redirect root path to /form
-    { path: 'form', component: FormPageComponent },
-    { path: '**', redirectTo: '/form' } // Wildcard route for unknown paths
+    { path : '', redirectTo: '/login', pathMatch:'full'},
+    { path: 'login', component: LoginPageComponent },
+    { path: 'signup', component: SignUpPageComponent },
+    { path: 'form', component: FormPageComponent, canActivate: [authGuard] },
+    
 ];
