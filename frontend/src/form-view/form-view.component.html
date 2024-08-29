@@ -24,33 +24,15 @@
     <tbody>
       <tr *ngFor="let formGroup of formArray.controls; let i = index" [formGroup]="getFormGroup(i)">
         <td>{{ getSafeFormControlValue(formGroup, 'id') }}</td>
-        <td>
-          <input type="text" formControlName="text" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
-        </td>
-        <td>
-          <textarea formControlName="multilineText" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></textarea>
-        </td>
-        <td>
-          <input type="email" formControlName="email" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
-        </td>
-        <td>
-          <input type="tel" formControlName="telephone" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
-        </td>
-        <td>
-          <input type="number" formControlName="number" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
-        </td>
-        <td>
-          <input type="date" formControlName="date" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
-        </td>
-        <td>
-          <input type="time" formControlName="time" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
-        </td>
-        <td>
-          <input type="datetime-local" formControlName="timestamp" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
-        </td>
-        <td>
-          <input type="checkbox" formControlName="checkbox" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
-        </td>
+        <td><input type="text" formControlName="text" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></td>
+        <td><textarea formControlName="multilineText" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></textarea></td>
+        <td><input type="email" formControlName="email" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></td>
+        <td><input type="tel" formControlName="telephone" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></td>
+        <td><input type="number" formControlName="number" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></td>
+        <td><input type="date" formControlName="date" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></td>
+        <td><input type="time" formControlName="time" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></td>
+        <td><input type="datetime-local" formControlName="timestamp" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></td>
+        <td><input type="checkbox" formControlName="checkbox" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></td>
         <td>
           <select formControlName="dropdown" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
             <option value="option1">Option 1</option>
@@ -59,7 +41,7 @@
           </select>
         </td>
         <td>
-          <div>
+          <div class="radio-list">
             <label>
               <input type="radio" formControlName="radioList" value="option1" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"> Option 1
             </label>
@@ -72,7 +54,7 @@
           </div>
         </td>
         <td>
-          <div formArrayName="checkboxList">
+          <div class="checkbox-list" formArrayName="checkboxList">
             <div *ngFor="let control of getCheckboxListControls(i); let j = index">
               <label>
                 <input type="checkbox" [formControlName]="j" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"> Option {{j + 1}}
@@ -89,15 +71,15 @@
             <option value="option4">Option 4</option>
           </select>
         </td>
-        <td>
-          <button *ngIf="editingFormId !== getSafeFormControlValue(formGroup, 'id')" (click)="editingFormId = getSafeFormControlValue(formGroup, 'id')">Edit</button>
-          <button *ngIf="editingFormId === getSafeFormControlValue(formGroup, 'id')" (click)="saveForm(i)">Save</button>
-          <button *ngIf="editingFormId === getSafeFormControlValue(formGroup, 'id')" (click)="cancelEdit()">Cancel</button>
-          <button (click)="deleteForm(i)">Delete</button>
+        <td class="actions">
+          <button *ngIf="editingFormId !== getSafeFormControlValue(formGroup, 'id')" (click)="editingFormId = getSafeFormControlValue(formGroup, 'id')" class="btn-edit">Edit</button>
+          <button *ngIf="editingFormId === getSafeFormControlValue(formGroup, 'id')" (click)="saveForm(i)" class="btn-save">Save</button>
+          <button *ngIf="editingFormId === getSafeFormControlValue(formGroup, 'id')" (click)="cancelEdit()" class="btn-cancel">Cancel</button>
+          <button (click)="deleteForm(i)" class="btn-delete">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <button (click)="navigateToManageForms()">Back to Manage Forms</button>
+  <button (click)="navigateToManageForms()" class="btn-back">Back to Manage Forms</button>
 </div>
