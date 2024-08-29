@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, FormArray } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterService } from '../router.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class FormPageComponent {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, private http: HttpClient,private snackBar: MatSnackBar,private routerService: RouterService) {
     this.form = this.fb.group({
       text: ['', [Validators.required]] , // Alphanumeric and spaces
       multilineText: ['', [Validators.required]], // Minimum 5 characters
@@ -37,6 +38,10 @@ export class FormPageComponent {
       imageFile: [],
       listBox: ['', Validators.required]
     });
+  }
+
+  navigateToManageForms(): void {
+    this.routerService.navigateTo('/forms');
   }
 
   get checkboxList() {
@@ -83,8 +88,8 @@ export class FormPageComponent {
       // Prepare form data for JSON
       const formData = {
           ...formDataJson,
-          pdfFile: undefined, // Exclude files for now
-          imageFile: undefined // Exclude files for now
+          pdfFile: undefined, 
+          imageFile: undefined 
       };
   
       // // Loop through each control and append the appropriate data
@@ -104,6 +109,7 @@ export class FormPageComponent {
       // Sending the FormData to the backend
       this.http.post('http://localhost:3000/api/v1/form', formData, { headers, observe: 'response' }).subscribe({
         next: (response) => {
+          console.log(formData);
           console.log('Form submitted successfully:', response.body);
 
           // Success MSG
@@ -128,6 +134,7 @@ export class FormPageComponent {
         },
         complete: () => {
           console.log('Form submission process completed.');
+          this.form.reset();
         }
       });
     } else {
