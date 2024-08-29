@@ -1,0 +1,103 @@
+<div class="form-container">
+  <h1>Your Submitted Forms</h1>
+  
+  <table class="form-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Text</th>
+        <th>Multiline Text</th>
+        <th>Email</th>
+        <th>Telephone</th>
+        <th>Number</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Timestamp</th>
+        <th>Checkbox</th>
+        <th>Dropdown</th>
+        <th>Radio List</th>
+        <th>Checkbox List</th>
+        <th>List Box</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let formGroup of formArray.controls; let i = index" [formGroup]="getFormGroup(i)">
+        <td>{{ getSafeFormControlValue(formGroup, 'id') }}</td>
+        <td>
+          <input type="text" formControlName="text" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+        </td>
+        <td>
+          <textarea formControlName="multilineText" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"></textarea>
+        </td>
+        <td>
+          <input type="email" formControlName="email" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+        </td>
+        <td>
+          <input type="tel" formControlName="telephone" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+        </td>
+        <td>
+          <input type="number" formControlName="number" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+        </td>
+        <td>
+          <input type="date" formControlName="date" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+        </td>
+        <td>
+          <input type="time" formControlName="time" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+        </td>
+        <td>
+          <input type="datetime-local" formControlName="timestamp" [readonly]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+        </td>
+        <td>
+          <input type="checkbox" formControlName="checkbox" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+        </td>
+        <td>
+          <select formControlName="dropdown" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+          </select>
+        </td>
+        <td>
+          <div>
+            <label>
+              <input type="radio" formControlName="radioList" value="option1" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"> Option 1
+            </label>
+            <label>
+              <input type="radio" formControlName="radioList" value="option2" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"> Option 2
+            </label>
+            <label>
+              <input type="radio" formControlName="radioList" value="option3" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"> Option 3
+            </label>
+          </div>
+        </td>
+        <td>
+          <div formArrayName="checkboxList">
+            <div *ngFor="let control of getCheckboxListControls(i); let j = index">
+              <label>
+                <input type="checkbox" [formControlName]="j" [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')"> Option {{j + 1}}
+              </label>
+            </div>
+          </div>
+          <span>{{ getCheckboxListDisplayValue(i) }}</span>
+        </td>
+        <td>
+          <select formControlName="listBox" multiple [disabled]="editingFormId !== getSafeFormControlValue(formGroup, 'id')">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+            <option value="option4">Option 4</option>
+          </select>
+        </td>
+        <td>
+          <button *ngIf="editingFormId !== getSafeFormControlValue(formGroup, 'id')" (click)="editingFormId = getSafeFormControlValue(formGroup, 'id')">Edit</button>
+          <button *ngIf="editingFormId === getSafeFormControlValue(formGroup, 'id')" (click)="saveForm(i)">Save</button>
+          <button *ngIf="editingFormId === getSafeFormControlValue(formGroup, 'id')" (click)="cancelEdit()">Cancel</button>
+          <button (click)="deleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="navigateToManageForms()">Back to Manage Forms</button>
+</div>
