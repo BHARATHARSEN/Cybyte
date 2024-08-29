@@ -78,11 +78,11 @@ export const editForm = async (req: Request, res: Response): Promise<void> => {
     ...req.body,
     // pdfFile: files['pdfFile'] && files['pdfFile'][0] ? files['pdfFile'][0].path : null,
     // imageFile: files['imageFile'] && files['imageFile'][0] ? files['imageFile'][0].path : null,
-    checkboxList: Array.isArray(req.body.checkboxList) ? req.body.checkboxList : [],
+    checkboxList: Array.isArray(req.body.checkboxList) ? req.body.checkboxList.join(',') : req.body.checkboxList,
     user_id: user_id,
   };
 
-  console.log(req.body)
+  console.log("Request Body",req.body)
 
   FormModel.updateFormData(formId, formData)
     .then(() => {
