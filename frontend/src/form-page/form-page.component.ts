@@ -92,20 +92,6 @@ export class FormPageComponent {
           imageFile: undefined 
       };
   
-      // // Loop through each control and append the appropriate data
-      // Object.keys(this.form.controls).forEach(key => {
-      //   const controlValue = this.form.get(key)?.value;
-  
-      //   if (controlValue instanceof File) {
-      //     formData.append(key, controlValue);
-      //   } else if (Array.isArray(controlValue)) {
-      //     // Append arrays as a JSON string
-      //     formData.append(key, JSON.stringify(controlValue));
-      //   } else {
-      //     formData.append(key, controlValue);
-      //   }
-      // });
-  
       // Sending the FormData to the backend
       this.http.post('http://localhost:3000/api/v1/form', formData, { headers, observe: 'response' }).subscribe({
         next: (response) => {
