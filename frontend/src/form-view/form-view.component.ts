@@ -452,6 +452,10 @@ export class FormViewComponent implements OnInit {
       .map((value) => this.fb.control(value === 'true'));
   }
 
+  navigateToCreate() : void {
+    this.routerService.navigateTo('/form')
+  }
+
   // Saves form data by making a PUT request
   saveForm(index: number): void {
     const formGroup = this.getFormGroup(index);
