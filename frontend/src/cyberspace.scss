@@ -1,0 +1,23 @@
+$primary-color: #3498db;
+$secondary-color: #2980b9;
+$accent-color: #2ecc71;
+$dark-accent: #1abc9c;
+$light-accent: #34495e;
+$text-color: #34495e;
+$light-text-color: #ffffff;
+
+// Base styles
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: $text-color;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $primary-color;
+}
