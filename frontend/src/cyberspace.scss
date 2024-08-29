@@ -1,23 +1,33 @@
-$primary-color: #3498db;
-$secondary-color: #2980b9;
-$accent-color: #2ecc71;
-$dark-accent: #1abc9c;
-$light-accent: #34495e;
-$text-color: #34495e;
-$light-text-color: #ffffff;
-
-// Base styles
 body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: $text-color;
+  background-image: url('../src//assets/aku-1tanjiros.jpg'); /* Replace with the actual path to your image */
+  background-size: cover; /* Ensure the image covers the entire page */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-attachment: fixed; /* Keep the background fixed when scrolling */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Ensure consistency in font styling */
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: $primary-color;
+.container {
+  max-width: 600px;
+  // background-color: rgba(255, 255, 255, 0.9); /* Add a slight transparency to the form background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 50px auto; /* Center the form on the page */
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+form label {
+  font-weight: bold;
+}
+
+.text-danger {
+  font-size: 0.875em;
+  margin-top: 0.25em;
 }

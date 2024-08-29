@@ -1,193 +1,114 @@
-@import '../../src//cyberspace.scss';
-
 .form-container {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(30, 30, 30, 0.8);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;  // Make the container take full width
+  max-width: 1200px;  // Limit the maximum width
+  margin: 0 auto;  // Center the container
+  overflow-x: auto;  // Allow horizontal scrolling if content overflows
 
-  .table {
-    background-color: transparent;
-    border-collapse: separate;
-    border-spacing: 0 10px;
+  h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .form-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+    th, td {
+      text-align: left;
+      padding: 15px;
+      color: #cf5d5d;
+      border-bottom: 1px solid #444;
+    }
 
     th {
-      text-align: left;
-      font-weight: bold;
-      color: $secondary-color;
-      background-color: rgba(255, 255, 255, 0.1);
-      padding: 10px 15px;
-      border-bottom: 2px solid $accent-color;
+      background-color: rgba(50, 50, 50, 0.8);
     }
 
     td {
-      padding: 10px 15px;
-      vertical-align: middle;
-      border-top: 1px solid $light-accent;
-      transition: background-color 0.3s ease;
+      background-color: rgba(40, 40, 40, 0.8);
+    }
 
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+    input {
+      background-color: rgba(255, 255, 255, 0.2); /* Change this to the desired color */
+      border: 1px solid #555; /* Border styling */
+      border-radius: 5px; /* Rounded corners */
+      padding: 10px; /* Padding inside the input */
+      color: #fff; /* Text color */
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+
+      button {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #555;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &.btn-edit {
+          background-color: #4CAF50;
+        }
+
+        &.btn-save {
+          background-color: #008CBA;
+        }
+
+        &.btn-cancel {
+          background-color: #f44336;
+        }
+
+        &.btn-delete {
+          background-color: #FF5722;
+        }
+
+        &:hover {
+          opacity: 0.9;
+        }
       }
     }
   }
 
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-
-    button {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: $accent-color;
-        color: white;
-      }
-
-      &.btn-primary {
-        background-color: $primary-color;
-        color: white;
-      }
-
-      &.btn-danger {
-        background-color: $dark-accent;
-        color: white;
-      }
-    }
-  }
-}
-
-.form-table {
-  width: 100%;
-  margin-bottom: 20px;
-
-  th {
-    text-align: left;
-    font-weight: bold;
-    color: $secondary-color;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 10px 15px;
-    border-bottom: 2px solid $accent-color;
-  }
-
-  td {
-    padding: 10px 15px;
-    vertical-align: middle;
-    border-top: 1px solid $light-accent;
+  .btn-back {
+    display: block;
+    width: 200px;
+    padding: 15px;
+    margin: 20px auto 0 auto;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #444;
     }
   }
 }
 
-// Input fields
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="number"] {
-  height: 45px;
-  padding-left: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-textarea {
-  min-height: 80px;
-  max-height: 120px;
-  padding: 10px;
-  resize: none;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-select {
-  height: 45px;
-  padding-left: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-button {
-  cursor: pointer;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: $primary-color;
-  color: white;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: darken($primary-color, 10%);
-  }
-}
-
-.radio-list label {
-  display: block;
-  margin-bottom: 5px;
-  cursor: pointer;
-
-  input[type="radio"] {
-    margin-right: 5px;
-  }
-}
-
-.checkbox-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-
-  label {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-
-    input[type="checkbox"] {
-      margin-right: 5px;
-    }
-  }
-}
-
-.list-box {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-// Responsive design
+// Responsive adjustments
 @media (max-width: 768px) {
   .form-container {
     padding: 15px;
   }
 
-  .table {
-    border-collapse: collapse;
-    border-spacing: 0;
-
-    th,
-    td {
-      padding: 10px;
-      border: 1px solid #ddd;
-    }
+  .form-table th, .form-table td {
+    padding: 10px;
   }
 
-  form {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-
-    button {
-      width: 100%;
-    }
+  .actions button {
+    padding: 8px;
   }
 }
