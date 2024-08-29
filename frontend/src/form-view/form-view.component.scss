@@ -1,0 +1,193 @@
+@import '../../src//cyberspace.scss';
+
+.form-container {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  .table {
+    background-color: transparent;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+
+    th {
+      text-align: left;
+      font-weight: bold;
+      color: $secondary-color;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 10px 15px;
+      border-bottom: 2px solid $accent-color;
+    }
+
+    td {
+      padding: 10px 15px;
+      vertical-align: middle;
+      border-top: 1px solid $light-accent;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: $accent-color;
+        color: white;
+      }
+
+      &.btn-primary {
+        background-color: $primary-color;
+        color: white;
+      }
+
+      &.btn-danger {
+        background-color: $dark-accent;
+        color: white;
+      }
+    }
+  }
+}
+
+.form-table {
+  width: 100%;
+  margin-bottom: 20px;
+
+  th {
+    text-align: left;
+    font-weight: bold;
+    color: $secondary-color;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-bottom: 2px solid $accent-color;
+  }
+
+  td {
+    padding: 10px 15px;
+    vertical-align: middle;
+    border-top: 1px solid $light-accent;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// Input fields
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"] {
+  height: 45px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+  min-height: 80px;
+  max-height: 120px;
+  padding: 10px;
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+select {
+  height: 45px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: $primary-color;
+  color: white;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.radio-list label {
+  display: block;
+  margin-bottom: 5px;
+  cursor: pointer;
+
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+}
+
+.checkbox-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+  }
+}
+
+.list-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .form-container {
+    padding: 15px;
+  }
+
+  .table {
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+  }
+
+  form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+
+    button {
+      width: 100%;
+    }
+  }
+}
