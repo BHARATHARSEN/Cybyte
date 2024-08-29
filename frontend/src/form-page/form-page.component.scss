@@ -1,118 +1,36 @@
-/* Form container */
-
-body {
-  background-image: url(../assets/aku-1tanjiros.jpg);
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-position: center; 
-  margin: 0; 
-  height: 100vh; 
+.container {
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  margin: 50px auto;
+  background: rgba(255, 255, 255, 0.2); /* Transparent white */
+  backdrop-filter: blur(10px); /* Adjust the blur radius */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Optional border for better visibility */
 }
 
 .header {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 20px;
 }
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #568fc9;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Form title */
-.form-title {
-  text-align: center;
-  font-size: 1.8rem;
+form label {
   font-weight: bold;
-  margin-bottom: 20px;
-  color: #343a40;
 }
 
-/* Form labels */
-.form-label {
-  font-weight: bold;
-  color: #495057;
-}
-
-/* Form controls */
-.form-control {
-  background-color: #fff;
-  border: 2px solid #ced4da;
-  border-radius: 8px;
-  padding: 10px;
-  transition: border-color 0.3s ease;
-}
-
-.form-control:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-/* Submit button */
-button[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-  background-color: #0056b3;
-}
-
-/* Error messages */
 .text-danger {
-  font-size: 0.9rem;
-  color: #e63946;
-  margin-top: 5px;
+  font-size: 0.875em;
+  margin-top: 0.25em;
 }
 
-/* Checkbox and radio buttons */
-.form-check-input {
-  margin-right: 10px;
-  accent-color: #007bff;
+/* Optional: Style form controls for better visibility on blurred background */
+input, textarea, select, button {
+  background: rgba(255, 255, 255, 0.5); /* Slightly transparent background */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Border color */
+  color: #000; /* Text color */
 }
 
-/* File inputs */
-.form-control[type="file"] {
-  padding: 3px;
-  border: none;
-  background-color: #f1f1f1;
-  border-radius: 8px;
+input::placeholder, textarea::placeholder {
+  color: rgba(0, 0, 0, 0.6); /* Placeholder text color */
 }
 
-.form-control[type="file"]:focus {
-  border: none;
-  outline: 2px solid #007bff;
-}
-
-/* List Box */
-select[multiple] {
-  height: auto;
-  background-color: #fff;
-  border: 2px solid #ced4da;
-  border-radius: 8px;
-  padding: 10px;
-}
-
-/* Responsive design */
-@media (max-width: 576px) {
-  .container {
-    padding: 15px;
-  }
-
-  button[type="submit"] {
-    font-size: 1rem;
-    padding: 8px;
-  }
-}
