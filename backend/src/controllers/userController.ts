@@ -8,6 +8,7 @@ import { sendResetPasswordEmail } from '../utils/emailService';
 
 export const createUser = (req: Request, res: Response): void => {
   const { name, email, password } = req.body;
+  
 
   User.create(name, email, password)
     .then(userId => {
