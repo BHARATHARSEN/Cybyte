@@ -8,6 +8,13 @@ body {
   margin: 0; 
   height: 100vh; 
 }
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
 .container {
   max-width: 600px;
   margin: 0 auto;
