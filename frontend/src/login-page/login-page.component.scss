@@ -11,9 +11,9 @@
       }
     }
   }
-  
+
   .card {
-    background-color: #ffffff;
+    background-color: rgba(207, 163, 163, 0.9); /* Slightly opaque white for contrast */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: none;
@@ -21,14 +21,14 @@
     max-width: 100%;
     width: 100%;
     transition: box-shadow 0.3s ease;
-    
+  
     &:hover {
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
   
     .text-center {
       margin-bottom: 2rem;
-      
+  
       .text-primary {
         color: #007bff;
       }
@@ -77,7 +77,7 @@
   
       .text-center {
         margin-top: 1rem;
-        
+  
         a {
           color: #007bff;
           font-weight: bold;
