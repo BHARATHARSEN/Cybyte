@@ -1,43 +1,94 @@
-<div class="container">
-    <!-- Title Section -->
-    <div class="text-center mb-5">
-      <h1 class="main-title">CYBYTE</h1>
-      <h2 class="sub-title">SIGN UP</h2>
+<!-- <div class="container">
+  <form [formGroup]="signUp" (ngSubmit)="onSubmit()" class="card p-4 shadow-sm border-0">
+    <div *ngIf="errorMessage" class="alert alert-danger mb-3">
+      {{ errorMessage }}
     </div>
-  
+
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input id="name" formControlName="name" type="text" class="form-control" placeholder="Enter your name" />
+      <div *ngIf="signUp.get('name')?.invalid && signUp.get('name')?.touched" class="text-danger">
+        <div *ngIf="signUp.get('name')?.errors?.['required']">Name is required.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input id="email" formControlName="email" type="email" class="form-control" placeholder="Enter your email" />
+      <div *ngIf="signUp.get('email')?.invalid && signUp.get('email')?.touched" class="text-danger">
+        <div *ngIf="signUp.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="signUp.get('email')?.errors?.['email']">Invalid email format.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input id="password" formControlName="password" type="password" class="form-control" placeholder="Enter your password" />
+      <div *ngIf="signUp.get('password')?.invalid && signUp.get('password')?.touched" class="text-danger">
+        <div *ngIf="signUp.get('password')?.errors?.['required']">Password is required.</div>
+        <div *ngIf="signUp.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="signUp.invalid" class="btn btn-primary">Sign Up</button>
+  </form>
+</div> -->
+
+<div class="outer-container">
+  <div class="container">
+    <!-- Title Section -->
+    <div class="title-section text-center mb-4">
+      <header class="h4">SIGN UP</header>
+    </div>
+
     <!-- Signup Form -->
-    <form [formGroup]="signUp" (ngSubmit)="onSubmit()" class="sign-up-form">
-      <div class="form-group mb-3">
-        <label for="name">Name</label>
-        <input id="name" formControlName="name" type="text" class="form-control form-control-sm" placeholder="Enter your name" />
-        <div *ngIf="signUp.get('name')?.invalid && signUp.get('name')?.touched" class="invalid-feedback">
-          <div *ngIf="signUp.get('name')?.errors?.['required']">Name is required.</div>
+    <div class="form-wrapper">
+      <form [formGroup]="signUp" (ngSubmit)="onSubmit()" class="card p-4 shadow-sm border-0">
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert alert-danger mb-3">
+          {{ errorMessage }}
         </div>
-      </div>
-  
-      <div class="form-group mb-3">
-        <label for="email">Email</label>
-        <input id="email" formControlName="email" type="email" class="form-control form-control-sm" placeholder="Enter your email" />
-        <div *ngIf="signUp.get('email')?.invalid && signUp.get('email')?.touched" class="invalid-feedback">
-          <div *ngIf="signUp.get('email')?.errors?.['required']">Email is required.</div>
-          <div *ngIf="signUp.get('email')?.errors?.['email']">Invalid email format.</div>
+
+        <!-- Name Field -->
+        <div class="form-group mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input id="name" formControlName="name" type="text" class="form-control" placeholder="Enter your name" />
+          <div *ngIf="signUp.get('name')?.invalid && signUp.get('name')?.touched" class="text-danger">
+            <div *ngIf="signUp.get('name')?.errors?.['required']">Name is required.</div>
+          </div>
         </div>
-      </div>
-  
-      <div class="form-group mb-3">
-        <label for="password">Password</label>
-        <input id="password" formControlName="password" type="password" class="form-control form-control-sm" placeholder="Enter your password" />
-        <div *ngIf="signUp.get('password')?.invalid && signUp.get('password')?.touched" class="invalid-feedback">
-          <div *ngIf="signUp.get('password')?.errors?.['required']">Password is required.</div>
-          <div *ngIf="signUp.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
+
+        <!-- Email Field -->
+        <div class="form-group mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" formControlName="email" type="email" class="form-control" placeholder="Enter your email" />
+          <div *ngIf="signUp.get('email')?.invalid && signUp.get('email')?.touched" class="text-danger">
+            <div *ngIf="signUp.get('email')?.errors?.['required']">Email is required.</div>
+            <div *ngIf="signUp.get('email')?.errors?.['email']">Invalid email format.</div>
+          </div>
         </div>
-      </div>
-  
-      <button type="submit" [disabled]="signUp.invalid" class="btn btn-primary btn-sm">Sign Up</button>
-  
-      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-        {{ errorMessage }}
-      </div>
-    </form>
+
+        <!-- Password Field -->
+        <div class="form-group mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input id="password" formControlName="password" type="password" class="form-control" placeholder="Enter your password" />
+          <div *ngIf="signUp.get('password')?.invalid && signUp.get('password')?.touched" class="text-danger">
+            <div *ngIf="signUp.get('password')?.errors?.['required']">Password is required.</div>
+            <div *ngIf="signUp.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group text-center">
+          <button type="submit" [disabled]="signUp.invalid" class="btn btn-primary">Sign Up</button>
+        </div>
+
+        <!-- Optional: Link or additional info -->
+        <div class="text-center mt-3">
+          <a href="#">Already have an account? Login</a>
+        </div>
+      </form>
+    </div>
   </div>
-  
+</div>
+
