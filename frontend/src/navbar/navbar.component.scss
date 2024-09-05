@@ -1,0 +1,53 @@
+.navbar {
+    background-color: rgba(30, 30, 30, 0.8); /* Match form-container background */
+    padding: 15px;
+    border-bottom: 1px solid #444; /* Match table borders */
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    position: fixed; /* Fix the position to the top */
+    top: 0; /* Align to the top */
+    width: 100%; /* Full width to ensure it spans across the page */
+    z-index: 1000; /* Ensure it stays above other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Optional shadow for better visibility */
+  }
+  
+  .brand-name {
+    font-size: 2rem; /* Adjust the font size as needed */
+    font-weight: bold; /* Make the font bold */
+    color: #fff; /* Set the font color to white */
+    margin-right: auto; /* Pushes the brand name to the leftmost corner */
+    font-family: 'Arial', sans-serif; /* Change the font family */
+    text-transform: uppercase; /* Make the text uppercase */
+    letter-spacing: 2px; /* Add space between letters */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add a subtle shadow for better visibility */
+  }
+  
+  .navbar-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+    margin-left: auto; /* Aligns the menu items to the right */
+  }
+  
+  .nav-item {
+    color: #fff; /* White text color */
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* Add transition for box-shadow */
+  }
+  
+  .nav-item:hover {
+    background-color: #444; /* Hover effect matching the form styling */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Glowing effect on hover */
+    color: #fff; /* Ensure text color stays white on hover */
+  }
+  
+  .nav-item.active {
+    font-weight: bold;
+    background-color: rgba(50, 50, 50, 0.8); /* Active link background */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Glowing effect for active item */
+  }
+  
