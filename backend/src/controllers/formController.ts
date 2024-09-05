@@ -8,29 +8,28 @@ import upload from '../middlewares/upload';
 // }
 
 export const submitForm = async (req: Request, res: Response): Promise<void> => {
-  // console.log("Hiii")
-  // upload.fields([
-  //   { name: 'pdfFile', maxCount: 1 },
-  //   { name: 'imageFile', maxCount: 1 }
-  // ])(req, res, async (err) => {
-  //   console.log(req.body, "Hello");
-  //   if (err) {
-  //     return res.status(500).json({ message: 'File upload error', error: err.message });
-  //   }
+  upload.fields([
+    { name: 'pdfFile', maxCount: 1 },
+    { name: 'imageFile', maxCount: 1 }
+  ])(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: 'File upload error', error: err.message });
+    }
 
     const user_id = (req as any).userData?.userId;
-    // const files = req.files as Files;
 
-    
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+
     const formData = {
       ...req.body,
       checkboxList: Array.isArray(req.body.checkboxList) ? req.body.checkboxList : [],
+      pdfFile: files && files['pdfFile'] ? files['pdfFile'][0].path : null,
+      imageFile: files && files['imageFile'] ? files['imageFile'][0].path : null,
       user_id: user_id,
     };
 
     console.log('Received formData:', formData);
 
-    
     FormModel.createFormData(formData)
       .then((insertId) => {
         res.status(200).json({ message: 'Form data inserted successfully', id: insertId });
@@ -39,7 +38,8 @@ export const submitForm = async (req: Request, res: Response): Promise<void> => 
         console.error('Error inserting form data:', error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message });
       });
-  };
+  });
+};
 
 
 
@@ -64,34 +64,36 @@ export const viewFormData = (req: Request, res: Response): void => {
 
 export const editForm = async (req: Request, res: Response): Promise<void> => {
   const formId = req.params.id;
-  const user_id = (req as any).userData?.userId;
-  // const files = req.files as Files;
 
-  if (!formId) {
-    res.status(400).json({ message: 'Form ID is required' });
-    return;
-  }
+  upload.fields([
+    { name: 'pdfFile', maxCount: 1 },
+    { name: 'imageFile', maxCount: 1 }
+  ])(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: 'File upload error', error: err.message });
+    }
 
-  console.log("this is user id ", user_id);
+    const user_id = (req as any).userData?.userId;
 
-  const formData = {
-    ...req.body,
-    // pdfFile: files['pdfFile'] && files['pdfFile'][0] ? files['pdfFile'][0].path : null,
-    // imageFile: files['imageFile'] && files['imageFile'][0] ? files['imageFile'][0].path : null,
-    checkboxList: Array.isArray(req.body.checkboxList) ? req.body.checkboxList.join(',') : req.body.checkboxList,
-    user_id: user_id,
-  };
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
 
-  console.log("Request Body",req.body)
+    const formData = {
+      ...req.body,
+      checkboxList: Array.isArray(req.body.checkboxList) ? req.body.checkboxList.join(',') : req.body.checkboxList,
+      pdfFile: files && files['pdfFile'] ? files['pdfFile'][0].path : null,
+      imageFile: files && files['imageFile'] ? files['imageFile'][0].path : null,
+      user_id: user_id,
+    };
 
-  FormModel.updateFormData(formId, formData)
-    .then(() => {
-      res.status(200).json({ message: 'Form data updated successfully' });
-    })
-    .catch((error) => {
-      console.error('Error updating form data:', error);
-      res.status(500).json({ message: 'Internal Server Error', error: error.message });
-    });
+    FormModel.updateFormData(formId, formData)
+      .then(() => {
+        res.status(200).json({ message: 'Form data updated successfully' });
+      })
+      .catch((error) => {
+        console.error('Error updating form data:', error);
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+      });
+  });
 };
 
 
