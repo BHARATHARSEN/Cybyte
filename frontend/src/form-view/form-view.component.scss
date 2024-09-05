@@ -5,8 +5,9 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.1);
   width: 100%;  // Make the container take full width
   max-width: 1200px;  // Limit the maximum width
-  margin: 0 auto;  // Center the container
+  margin: 120px auto 40px; // Increased top margin
   overflow-x: auto;  // Allow horizontal scrolling if content overflows
+  position: relative; // Added position relative
 
   h1 {
     text-align: center;
@@ -18,6 +19,7 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    margin-top: 40px;
 
     th, td {
       text-align: left;
