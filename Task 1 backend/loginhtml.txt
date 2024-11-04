@@ -1,0 +1,52 @@
+<div class="box">
+    <div class="container">
+      <div class="top-header">
+        <span>Andev web</span>
+        <header>Iniciar Sesión</header>
+      </div>
+  
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="input-field">
+          <input 
+            type="text" 
+            class="input" 
+            placeholder="Usuario" 
+            name="username" 
+            [(ngModel)]="username" 
+            required 
+            #usernameInput="ngModel">
+          <i class="bx bx-user"></i>
+          <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)" class="error">
+            Usuario es requerido.
+          </div>
+        </div>
+        <div class="input-field">
+          <input 
+            type="password" 
+            class="input" 
+            placeholder="Contraseña" 
+            name="password" 
+            [(ngModel)]="password" 
+            required 
+            #passwordInput="ngModel">
+          <i class="bx bx-lock-alt"></i>
+          <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" class="error">
+            Contraseña es requerida.
+          </div>
+        </div>
+        <div class="input-field">
+          <input type="submit" class="submit" value="Inicio" [disabled]="loginForm.invalid">
+        </div>
+  
+        <div class="bottom">
+          <div class="left">
+            <input type="checkbox" id="check" [(ngModel)]="rememberMe">
+            <label for="check"> Recordarme</label>
+          </div>
+          <div class="right">
+            <label><a href="#">¿Olvidaste la contraseña?</a></label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
