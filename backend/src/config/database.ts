@@ -5,6 +5,8 @@ dotenv.config();
 
 let pools: { [key: string]: Pool } = {};
 
+//creating pool
+
 export const createPool = (database: string): Pool => {
   if (!pools[database]) {
     pools[database] = mysql.createPool({
