@@ -1,0 +1,30 @@
+<div class="container">
+    <h1>Select Database</h1>
+  
+    <form [formGroup]="form">
+      <label for="database" >Choose a Database:</label>
+      <select formControlName="database" id="database" >
+        <option value="database1">Database 1</option>
+        <option value="database2">Database 2</option>
+      </select>
+      <button type="button" (click)="onDatabaseSelect()">Fetch Data</button>
+    </form>
+  
+    <!-- Display fetched data in a table -->
+    <div *ngIf="data && data.length > 0">
+      <h2>Data from Selected Database</h2>
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let keyValue of data[0] | keyvalue">{{ keyValue.key }}</th>
+          </tr>
+        </thead>
+        <tbody id="datafont">
+          <tr *ngFor="let item of data">
+            <td *ngFor="let keyValue of item | keyvalue">{{ keyValue.value }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
