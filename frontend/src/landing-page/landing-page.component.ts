@@ -8,16 +8,16 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],
-  imports: [ReactiveFormsModule, CommonModule],  // Ensure ReactiveFormsModule is included here
+  imports: [ReactiveFormsModule, CommonModule],  
 })
 export class LandingPageComponent implements OnInit {
   form: FormGroup;
-  data: any[] = []; // This will store data from the selected database
+  data: any[] = []; 
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
-    // Initialize the form with a dropdown for selecting the database
+    // Initializing the form with a dropdown for selecting the database
     this.form = this.fb.group({
-      database: ['database1']  // Default to "database1"
+      database: ['database1']  // Default to database1
     });
   }
 
@@ -26,7 +26,7 @@ export class LandingPageComponent implements OnInit {
   onDatabaseSelect(): void {
     const selectedDatabase = this.form.get('database')?.value;
 
-    // Fetch data based on selected database
+    // Fetching data based on selected database
     this.http
       .get<any[]>(`http://localhost:3000/api/v1/data?dbName=${selectedDatabase}`)
       .subscribe({
