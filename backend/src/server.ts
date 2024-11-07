@@ -4,6 +4,7 @@ import formRoutes from "./routes/formRoutes";
 import dotenv from "dotenv";
 import cors from "cors";
 import { handleRequest } from "./middlewares/dummy";
+import databaseRoutes from "./routes/databaseRoutes"
 
 // Loading environment variables from .env file
 dotenv.config();
@@ -26,6 +27,7 @@ app.use('/uploads', express.static('uploads')); // Serves static files
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", formRoutes);
 app.use("/api/v1", handleRequest);
+app.use("/api/v1", databaseRoutes);
 
 // port
 const PORT: number = parseInt(process.env.PORT || "3000", 10);
